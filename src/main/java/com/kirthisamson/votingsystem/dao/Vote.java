@@ -16,14 +16,15 @@ import javax.validation.constraints.NotNull;
  * Project Lombok to minimize boilerplate code.
  * @see <a href="https://projectlombok.org/">https://projectlombok.org/</a>
  *
- * @Author Kirthi Samson Chilkuri
+ * Created by Kirthi Samson Chilkuri
  */
 
-@Entity
+
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Entity
 @Table(name="vote")
 public class Vote {
     @Id

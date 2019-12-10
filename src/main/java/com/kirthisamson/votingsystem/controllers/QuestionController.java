@@ -12,11 +12,20 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
 
+    /**
+     * An endpoint for getting a list of all questions
+     * @return list of questions
+     */
     @GetMapping(value="")
     Iterable<Question> getAllQuestions() {
         return questionService.getAllQuestions();
     }
 
+    /**
+     * An endpoint for getting a list of questions for a user
+     * @param userId
+     * @return list of questions
+     */
     @GetMapping(params="userId")
     Iterable<Question> getQuestionsForUser(@RequestParam("userId") int userId) {
         return questionService.getQuestionsForUser(userId);

@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * Project Lombok to minimize boilerplate code.
  * @see <a href="https://projectlombok.org/">https://projectlombok.org/</a>
  *
- * @Author Kirthi Samson Chilkuri
+ * Created by Kirthi Samson Chilkuri
  */
 
 

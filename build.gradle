@@ -34,8 +34,32 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	testCompile 'junit:junit:4.11'
 }
 
 test {
 	useJUnitPlatform()
 }
+
+//if (JavaVersion.current().isJava8Compatible()) {
+//	allprojects {
+//		tasks.withType(Javadoc) {
+//			options.addStringOption('Xdoclint:none', '-quiet')
+//		}
+//	}
+//}
+
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	from javadoc.destinationDir
+}
+
+artifacts {
+	archives sourcesJar
+	archives javadocJar
+}
+

@@ -15,6 +15,11 @@ public class VoteController {
     @Autowired
     VoteService voteService;
 
+    /**
+     * An endpoint to cast a vote by a user on a particular question
+     * @param userVote
+     * @throws Exception
+     */
     @PostMapping(value="")
     void castVote(@RequestBody UserVote userVote) throws Exception {
         voteService.castVote(userVote.getUserId(), userVote.getQuestionId(), userVote.isVote());

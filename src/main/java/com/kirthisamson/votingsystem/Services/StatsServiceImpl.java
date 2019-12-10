@@ -4,24 +4,31 @@ import com.kirthisamson.votingsystem.dao.Question;
 import com.kirthisamson.votingsystem.models.QuestionStats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
+/**
+ * {@inheritDoc}
+ */
 @Service
 public class StatsServiceImpl implements StatsService {
 
-  @Autowired
   VoteService voteService;
-
-  @Autowired
   QuestionService questionService;
 
+  @Autowired
+  public StatsServiceImpl(VoteService voteService,
+                          QuestionService questionService) {
+
+    Assert.notNull(voteService, "Vote Service cannot be null");
+    Assert.notNull(questionService, "Question Service cannot be null");
+
+    this.voteService = voteService;
+    this.questionService = questionService;
+  }
 
   /**
-   * Generates Voting Stats for a question.
-   * @param questionId
-   * @return an object of QuestionStats which contains the Question Id, the Question Text,
-   * Count for all the 'Yes' votes, count for 'No' votes, Total votes for that question, and Yes and No percentages
+   * {@inheritDoc}
    */
-
   @Override
   public QuestionStats getStatsForQuestion(int questionId) {
     Question question = questionService.getQuestion(questionId);
@@ -30,8 +37,8 @@ public class StatsServiceImpl implements StatsService {
     int noCount = voteService.getNoCountForQuestion(questionId);
     int voteCount = voteService.getVoteCountForQuestion(questionId);
 
-    int yesPercentage = yesCount/voteCount * 100;
-    int noPercentage = noCount/voteCount * 100;
+    int yesPercentage = yesCount * 100/voteCount;
+    int noPercentage = noCount * 100/voteCount;
 
     String yesPercentageText = Integer.toString(yesPercentage) + "%";
     String noPercentageText = Integer.toString(noPercentage) + "%";

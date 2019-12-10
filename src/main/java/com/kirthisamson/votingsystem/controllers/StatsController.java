@@ -15,6 +15,11 @@ public class StatsController {
     @Autowired
     StatsService statsService;
 
+    /**
+     * Get vote statistics for a particular question
+     * @param questionId
+     * @return a list of QuestionStats objects
+     */
     @GetMapping(value = "/{questionId}")
     public QuestionStats getStatsForQuestion(@PathVariable int questionId) {
         return statsService.getStatsForQuestion(questionId);

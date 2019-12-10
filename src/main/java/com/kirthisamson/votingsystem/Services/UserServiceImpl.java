@@ -6,32 +6,61 @@ import com.kirthisamson.votingsystem.repositories.UserRepository;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
-import java.util.NoSuchElementException;
-
+/**
+ * {@inheritDoc}
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+
+        Assert.notNull(userRepository, "User Repository cannot be null");
+
+        this.userRepository = userRepository;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public User getUserByEmail(String email) {
+    public User getUserByEmail(@NonNull String email) {
       return userRepository.findByEmail(email);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void addUser(@NonNull User user) {
-        userRepository.save(user);
+    public User getUser(int id) {
+        return userRepository.findById(id).get();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void addUser(@NonNull String username,
+    public User addUser(@NonNull User user) {
+        return userRepository.save(user);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User addUser(@NonNull String username,
                         @NonNull String email) {
 
         if(getUserByEmail(email) != null) throw new UserAlreadyExistsException("User's email is already in use. User already exists");
@@ -40,16 +69,14 @@ public class UserServiceImpl implements UserService {
                         .name(username)
                         .email(email)
                         .build();
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public User getUserByName(@NonNull String name) {
         return userRepository.findByName(name);
-    }
-
-    @Override
-    public User getUser(int id) {
-        return userRepository.findById(id).get();
     }
 }
