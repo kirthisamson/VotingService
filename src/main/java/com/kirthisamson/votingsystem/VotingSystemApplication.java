@@ -19,8 +19,6 @@ public class VotingSystemApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Started");
-
 		questionService.seedQuestions();
 	}
 }
